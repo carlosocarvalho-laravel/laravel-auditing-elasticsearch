@@ -1,7 +1,5 @@
 # Auditing Elasticsearch Driver
 
-[![Latest Unstable Version](https://poser.pugx.org/iconscout/laravel-auditing-elasticsearch/v/unstable)](https://packagist.org/packages/iconscout/laravel-auditing-elasticsearch) [![Total Downloads](https://poser.pugx.org/iconscout/laravel-auditing-elasticsearch/downloads)](https://packagist.org/packages/iconscout/laravel-auditing-elasticsearch) [![License](https://poser.pugx.org/iconscout/laravel-auditing-elasticsearch/license)](https://packagist.org/packages/iconscout/laravel-auditing-elasticsearch)
-
 This driver provides the ability to save your model audits in elasticsearch.
 
 ## Contents
@@ -18,7 +16,7 @@ This driver requires that you are using `owen-it/laravel-auditing: ^7.0`. Provid
 you can install the driver like so:
 
 ```
-composer require iconscout/laravel-auditing-elasticsearch
+composer require carlosocarvalho/laravel-auditing-elasticsearch
 ```
 
 ## Setup
@@ -47,7 +45,7 @@ The `driver` key of the config file should look like so:
 
 ```
     ...
-    'driver' => Iconscout\Auditing\Drivers\ElasticSearch::class,
+    'driver' => CarlosOCarvalho\Auditing\Drivers\ElasticSearch::class,
     ...
 ```
 
@@ -152,11 +150,11 @@ $all = $icon->esAudits($page = 1, $perPage = 10);
 
 ## Donations
 
-> Help keeping the project development going, by [contributing](https://github.com/Iconscout/laravel-auditing-elasticsearch/graphs/contributors) or donating a little. 
+> Help keeping the project development going, by [contributing](https://github.com/Iconscout/laravel-auditing-elasticsearch/graphs/contributors) or donating a little.
 > Thanks in advance.
 
 Donate directly via [Paypal](https://www.paypal.me/rankarpan)
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/rankarpan) 
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/rankarpan)
 
 More information on using customer drivers with owen-it/laravel-auditing can be found on their [homepage](http://laravel-auditing.com/docs/7.0/audit-drivers)

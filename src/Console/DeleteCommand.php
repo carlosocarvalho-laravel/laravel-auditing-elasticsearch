@@ -11,12 +11,12 @@
  * with this source code.
  */
 
-namespace Iconscout\Auditing\Console;
+namespace CarlosOCarvalho\Auditing\Console;
 
 use Illuminate\Console\Command;
 
 use Illuminate\Support\Facades\Config;
-use Iconscout\Auditing\Drivers\ElasticSearch;
+use CarlosOCarvalho\Auditing\Drivers\ElasticSearch;
 
 class DeleteCommand extends Command
 {

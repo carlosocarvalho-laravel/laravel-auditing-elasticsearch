@@ -11,14 +11,14 @@
  * with this source code.
  */
 
-namespace Iconscout\Auditing\Jobs;
+namespace CarlosOCarvalho\Auditing\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Iconscout\Auditing\Drivers\ElasticSearch;
+use CarlosOCarvalho\Auditing\Drivers\ElasticSearch;
 
 class AuditDeleteQueuedModels implements ShouldQueue
 {

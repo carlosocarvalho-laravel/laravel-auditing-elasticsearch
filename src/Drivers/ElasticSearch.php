@@ -11,18 +11,19 @@
  * with this source code.
  */
 
-namespace Iconscout\Auditing\Drivers;
+namespace CarlosOCarvalho\Auditing\Drivers;
 
 use Carbon\Carbon;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Config;
-use Iconscout\Auditing\Jobs\AuditIndexQueuedModels;
-use Iconscout\Auditing\Jobs\AuditDeleteQueuedModels;
+use CarlosOCarvalho\Auditing\Jobs\AuditIndexQueuedModels;
+use CarlosOCarvalho\Auditing\Jobs\AuditDeleteQueuedModels;
 use OwenIt\Auditing\Contracts\Audit;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Contracts\AuditDriver;
 use OwenIt\Auditing\Models\Audit as AuditModel;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class ElasticSearch implements AuditDriver
 {
@@ -40,6 +41,8 @@ class ElasticSearch implements AuditDriver
      * @var string
      */
     protected $type = null;
+
+    protected $column_auditable = 'auditable_type';
 
     /**
      * ElasticSearch constructor.
@@ -61,9 +64,9 @@ class ElasticSearch implements AuditDriver
     public function audit(Auditable $model): Audit
     {
         $implementation = Config::get('audit.implementation', AuditModel::class);
-        
+
         $this->storeAudit($model->toAudit());
-        
+
         return new $implementation;
     }
 
@@ -86,11 +89,11 @@ class ElasticSearch implements AuditDriver
     public function storeAudit($model)
     {
         $model['created_at'] = Carbon::now()->toDateTimeString();
-
+        $model[$this->$column_auditable] = Str::slug($model[$this->$column_auditable]);
         if (Config::get('audit.queue', false)) {
             return $this->indexQueueAuditDocument($model);
         }
-        
+
         return $this->indexAuditDocument($model);
     }
 
@@ -108,7 +111,7 @@ class ElasticSearch implements AuditDriver
         if (Config::get('audit.queue', false)) {
             return $this->deleteQueueAuditDocument($model);
         }
-        
+
         return $this->deleteAuditDocument($model);
     }
 
@@ -197,7 +200,7 @@ class ElasticSearch implements AuditDriver
 
         if (count($audits)) {
             $audit_ids = array_column($audits, '_id');
-            
+
             foreach ($audit_ids as $audit_id) {
                 $params['body'][] = [
                     'delete' => [
@@ -208,7 +211,7 @@ class ElasticSearch implements AuditDriver
                 ];
 
             }
-            
+
             return (bool) $this->client->bulk($params);
         }
 

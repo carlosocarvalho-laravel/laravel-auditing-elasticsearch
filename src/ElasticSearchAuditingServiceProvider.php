@@ -11,12 +11,12 @@
  * with this source code.
  */
 
-namespace Iconscout\Auditing;
+namespace CarlosOCarvalho\Auditing;
 
 use Illuminate\Support\ServiceProvider;
 
-use Iconscout\Auditing\Console\IndexCommand;
-use Iconscout\Auditing\Console\DeleteCommand;
+use CarlosOCarvalho\Auditing\Console\IndexCommand;
+use CarlosOCarvalho\Auditing\Console\DeleteCommand;
 
 class ElasticSearchAuditingServiceProvider extends ServiceProvider
 {

@@ -126,7 +126,7 @@ return [
     |
     */
 
-    'driver' => Iconscout\Auditing\Drivers\ElasticSearch::class,
+    'driver' => CarlosOCarvalho\Auditing\Drivers\ElasticSearch::class,
 
     /*
     |--------------------------------------------------------------------------

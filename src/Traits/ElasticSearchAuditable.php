@@ -11,7 +11,7 @@
  * with this source code.
  */
 
-namespace Iconscout\Auditing\Traits;
+namespace CarlosOCarvalho\Auditing\Traits;
 
 use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Config;
@@ -24,7 +24,7 @@ trait ElasticSearchAuditable
         $client = ClientBuilder::create()->setHosts(Config::get('audit.drivers.es.client.hosts', ['localhost:9200']))->build();
         $index = Config::get('audit.drivers.es.index', 'laravel_auditing');
         $type = Config::get('audit.drivers.es.type', 'audits');
-           
+
         $from = ($page - 1) * $perPage;
         $order = $sort === 'latest' ? 'desc' : 'asc';
 
