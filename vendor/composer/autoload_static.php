@@ -6,27 +6,147 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitbfc3946dc65ba33b98789ecd93cb0023
 {
+    public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '72579e7bd17821bb1321b87411366eae' => __DIR__ . '/..' . '/illuminate/support/helpers.php',
+        'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Translation\\' => 30,
+            'Symfony\\Component\\Finder\\' => 25,
+            'Symfony\\Component\\Console\\' => 26,
+        ),
+        'R' => 
+        array (
+            'React\\Promise\\' => 14,
+        ),
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Log\\' => 8,
+            'Psr\\Container\\' => 14,
+        ),
+        'O' => 
+        array (
+            'OwenIt\\Auditing\\' => 16,
+        ),
+        'I' => 
+        array (
+            'Illuminate\\Support\\' => 19,
+            'Illuminate\\Filesystem\\' => 22,
+            'Illuminate\\Database\\' => 20,
+            'Illuminate\\Contracts\\' => 21,
+            'Illuminate\\Container\\' => 21,
+            'Illuminate\\Console\\' => 19,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Stream\\' => 18,
+            'GuzzleHttp\\Ring\\' => 16,
+        ),
+        'E' => 
+        array (
+            'Elasticsearch\\' => 14,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Inflector\\' => 26,
+        ),
         'C' => 
         array (
-            'CarlosOCarvalho\\Auditing\\' => 24,
+            'CarlosOCarvalho\\Auditing\\' => 25,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
+        'Symfony\\Component\\Finder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/finder',
+        ),
+        'Symfony\\Component\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'React\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'OwenIt\\Auditing\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/owen-it/laravel-auditing/src',
+        ),
+        'Illuminate\\Support\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/support',
+        ),
+        'Illuminate\\Filesystem\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/filesystem',
+        ),
+        'Illuminate\\Database\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/database',
+        ),
+        'Illuminate\\Contracts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/contracts',
+        ),
+        'Illuminate\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/container',
+        ),
+        'Illuminate\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/console',
+        ),
+        'GuzzleHttp\\Stream\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/streams/src',
+        ),
+        'GuzzleHttp\\Ring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
+        ),
+        'Elasticsearch\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/elasticsearch/elasticsearch/src/Elasticsearch',
+        ),
+        'Doctrine\\Common\\Inflector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Common/Inflector',
+        ),
         'CarlosOCarvalho\\Auditing\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
-    public static $classMap = array (
-        'CarlosOCarvalho\\Auditing\\Console\\DeleteCommand' => __DIR__ . '/../..' . '/src/Console/DeleteCommand.php',
-        'CarlosOCarvalho\\Auditing\\Console\\IndexCommand' => __DIR__ . '/../..' . '/src/Console/IndexCommand.php',
-        'CarlosOCarvalho\\Auditing\\Drivers\\ElasticSearch' => __DIR__ . '/../..' . '/src/Drivers/ElasticSearch.php',
-        'CarlosOCarvalho\\Auditing\\Jobs\\AuditDeleteQueuedModels' => __DIR__ . '/../..' . '/src/Jobs/AuditDeleteQueuedModels.php',
-        'CarlosOCarvalho\\Auditing\\Jobs\\AuditIndexQueuedModels' => __DIR__ . '/../..' . '/src/Jobs/AuditIndexQueuedModels.php',
-        'CarlosOCarvalho\\Auditing\\Traits\\ElasticSearchAuditable' => __DIR__ . '/../..' . '/src/Traits/ElasticSearchAuditable.php',
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/..' . '/nesbot/carbon/src',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -34,7 +154,7 @@ class ComposerStaticInitbfc3946dc65ba33b98789ecd93cb0023
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitbfc3946dc65ba33b98789ecd93cb0023::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbfc3946dc65ba33b98789ecd93cb0023::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbfc3946dc65ba33b98789ecd93cb0023::$classMap;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitbfc3946dc65ba33b98789ecd93cb0023::$fallbackDirsPsr4;
 
         }, null, ClassLoader::class);
     }

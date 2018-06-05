@@ -22,13 +22,13 @@
     "type": "package",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/iconscout/laravel-auditing-elasticsearch/issues",
-        "source": "https://github.com/iconscout/laravel-auditing-elasticsearch"
+        "issues": "https://github.com/carlosocarvalho/laravel-auditing-es/issues",
+        "source": "https://github.com/carlosocarvalho/laravel-auditing-es"
     },
     "authors": [
         {
-            "name": "Arpan Rank",
-            "email": "arpan@iconscout.com"
+            "name": "Carlos Carvalho",
+            "email": "contato@carlosocarvalho.com.br"
         }
     ],
     "require": {

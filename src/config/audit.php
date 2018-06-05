@@ -3,7 +3,7 @@
 /**
  * This file is part of the Laravel Auditing package.
  *
- * @author     Arpan Rank <arpan@iconscout.com>
+ * @author     Carlos  <contato@carlosocarvalho.com.br>
  * @copyright  2018
  *
  * For the full copyright and license information,
@@ -110,7 +110,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This option allows you to control if the operations that audit your models
-    | with your auditors are queued. When this is set to "true" then all models 
+    | with your auditors are queued. When this is set to "true" then all models
     | auditable will get queued for better performance.
     |
     */
