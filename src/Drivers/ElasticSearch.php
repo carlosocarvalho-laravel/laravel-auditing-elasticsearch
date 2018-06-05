@@ -1,16 +1,5 @@
 <?php
 
-/**
- * This file is part of the Laravel Auditing package.
- *
- * @author     Arpan Rank <arpan@iconscout.com>
- * @copyright  2018
- *
- * For the full copyright and license information,
- * please view the LICENSE.md file that was distributed
- * with this source code.
- */
-
 namespace CarlosOCarvalho\Auditing\Drivers;
 
 use Carbon\Carbon;
@@ -40,9 +29,12 @@ class ElasticSearch implements AuditDriver
     /**
      * @var string
      */
-    protected $type = null;
+    public $typeElastic = null;
 
     protected $column_auditable = 'auditable_type';
+
+
+
 
     /**
      * ElasticSearch constructor.
@@ -51,8 +43,21 @@ class ElasticSearch implements AuditDriver
     {
         $this->client = ClientBuilder::create()->setHosts(Config::get('audit.drivers.es.client.hosts', ['localhost:9200']))->build();
         $this->index = Config::get('audit.drivers.es.index', 'laravel_auditing');
-        $this->type = Config::get('audit.drivers.es.type', 'audits');
+
     }
+
+
+
+    public function getAuditTypeEs(){
+      return  $this->typeElastic;
+    }
+
+    public function setAuditTypeEs(Auditable $model){
+        $this->typeElastic =   $model->typeElastic == null ? Config::get('audit.drivers.es.type', 'audits') : $model->typeElastic;
+    }
+
+
+
 
     /**
      * Perform an audit.
@@ -65,6 +70,7 @@ class ElasticSearch implements AuditDriver
     {
         $implementation = Config::get('audit.implementation', AuditModel::class);
 
+        $this->setAuditTypeEs($model);
         $this->storeAudit($model->toAudit());
 
         return new $implementation;
@@ -79,6 +85,7 @@ class ElasticSearch implements AuditDriver
      */
     public function prune(Auditable $model): bool
     {
+         $this->setAuditTypeEs($model);
         if ($model->getAuditThreshold() > 0) {
             return $this->destroyAudit($model);
         }
@@ -89,11 +96,14 @@ class ElasticSearch implements AuditDriver
     public function storeAudit($model)
     {
         $model['created_at'] = Carbon::now()->toDateTimeString();
-        $model[$this->$column_auditable] = Str::slug($model[$this->$column_auditable]);
-        if (Config::get('audit.queue', false)) {
+
+        $model[$this->column_auditable] = Str::slug(str_replace("\\", "-", $model[$this->column_auditable]));
+
+
+      /*  if (Config::get('audit.queue', false)) {
             return $this->indexQueueAuditDocument($model);
         }
-
+ */
         return $this->indexAuditDocument($model);
     }
 
@@ -148,10 +158,11 @@ class ElasticSearch implements AuditDriver
     {
         $params = [
             'index' => $this->index,
-            'type' => $this->type,
-            'id' => Uuid::uuid4(),
+            'type' => $this->getAuditTypeEs(),
+            'id' => isset($model['uid']) ? $model['uid'] : Uuid::uuid4(),
             'body' => $model
         ];
+
 
         return $this->client->index($params);
     }
@@ -162,7 +173,7 @@ class ElasticSearch implements AuditDriver
 
         $params = [
             'index' => $this->index,
-            'type' => $this->type,
+            'type' => $this->getAuditTypeEs(),
             'size' => 10000 - $skip,
             'from' => $skip,
             'body' => [
@@ -172,11 +183,6 @@ class ElasticSearch implements AuditDriver
                             [
                                 'term' => [
                                     'auditable_id' => $model->id
-                                ]
-                            ],
-                            [
-                                'term' => [
-                                    'auditable_type' => $model->getMorphClass()
                                 ]
                             ]
                         ]
@@ -205,7 +211,7 @@ class ElasticSearch implements AuditDriver
                 $params['body'][] = [
                     'delete' => [
                         '_index' => $this->index,
-                        '_type' => $this->type,
+                        '_type' => $this->getAuditTypeEs(),
                         '_id' => $audit_id
                     ]
                 ];
@@ -271,7 +277,7 @@ class ElasticSearch implements AuditDriver
     {
         $params = [
             'index' => $this->index,
-            'type' => $this->type,
+            'type' => $this->getAuditTypeEs(),
             'body' => [
                 $this->type => [
                     '_source' => [
@@ -282,10 +288,11 @@ class ElasticSearch implements AuditDriver
                             'type' => 'string',
                             'index' => 'not_analyzed'
                         ],
+                        /*
                         'auditable_type' => [
-                            'type' => 'string',
-                            'index' => 'not_analyzed'
-                        ],
+                            'type' => 'text',
+                            'fielddata' => true
+                        ],*/
                         'ip_address' => [
                             'type' => 'string',
                             'index' => 'not_analyzed'
@@ -338,6 +345,7 @@ class ElasticSearch implements AuditDriver
                 ]
             ]
         ];
+
 
         return $this->client->indices()->putMapping($params);
     }

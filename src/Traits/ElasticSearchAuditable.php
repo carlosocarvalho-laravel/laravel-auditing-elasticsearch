@@ -1,21 +1,12 @@
 <?php
 
-/**
- * This file is part of the Laravel Auditing package.
- *
- * @author     Arpan Rank <arpan@iconscout.com>
- * @copyright  2018
- *
- * For the full copyright and license information,
- * please view the LICENSE.md file that was distributed
- * with this source code.
- */
-
 namespace CarlosOCarvalho\Auditing\Traits;
 
 use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
+
 
 trait ElasticSearchAuditable
 {
@@ -23,7 +14,7 @@ trait ElasticSearchAuditable
     {
         $client = ClientBuilder::create()->setHosts(Config::get('audit.drivers.es.client.hosts', ['localhost:9200']))->build();
         $index = Config::get('audit.drivers.es.index', 'laravel_auditing');
-        $type = Config::get('audit.drivers.es.type', 'audits');
+        $type = $this->typeElastic == null ? Config::get('audit.drivers.es.type', 'audits') : $this->typeElastic;
 
         $from = ($page - 1) * $perPage;
         $order = $sort === 'latest' ? 'desc' : 'asc';
@@ -41,24 +32,28 @@ trait ElasticSearchAuditable
                                 'term' => [
                                     'auditable_id' => $this->id
                                 ]
-                            ],
-                            [
-                                'term' => [
-                                    'auditable_type' => $this->getMorphClass()
-                                ]
                             ]
-                        ]
+                        ],
+                        /*'filter' => [
+
+                              [
+                                'term' => [
+                                     'auditable_type' => 'app-entities-schedule'
+                                ]
+                              ]
+                        ]*/
                     ]
                 ],
-                'sort' => [
+                /*'sort' => [
                     'created_at' => [
                         'order' => $order
                     ]
-                ],
+                ],*/
                 'track_scores' => true
             ]
         ];
 
+        //dd($params);
         $results = $client->search($params);
         $hits = $results['hits'];
 
